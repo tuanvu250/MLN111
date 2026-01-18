@@ -10,8 +10,8 @@ function Detail() {
   return (
     <div className="w-full h-screen bg-[#e0e0e0] flex flex-col items-center justify-center relative">
       <div className="absolute top-0 left-0 w-full p-4 z-20 flex justify-between items-start pointer-events-none">
-        <Link to="/" className="pointer-events-auto bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md text-slate-700 font-medium hover:bg-white transition-colors">
-          ← Back to Collection
+        <Link to="/" className="pointer-events-auto bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full shadow-md text-sm md:text-base text-slate-700 font-medium hover:bg-white transition-colors whitespace-nowrap">
+          ← Trở lại
         </Link>
         <div className="text-right">
              <h1 className="text-xl font-bold text-slate-700">Bookmark #{id}</h1>
