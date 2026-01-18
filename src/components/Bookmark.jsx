@@ -1,15 +1,20 @@
 import React, { useMemo, useLayoutEffect, useRef } from 'react';
 import { useTexture } from '@react-three/drei';
 import * as THREE from 'three';
-// Import assets directly to ensure Vite processes them
-import frontUrl from '../assets/1.png';
-import backUrl from '../assets/2.png';
+import { getBookmarkData } from '../utils/bookmarkData';
 
-export function Bookmark(props) {
+export function Bookmark({ id, ...props }) {
+  const { front, back } = useMemo(() => getBookmarkData(id), [id]);
+
   // Load textures
-  const [frontTexture, backTexture] = useTexture([frontUrl, backUrl]);
-  frontTexture.anisotropy = 16;
-  backTexture.anisotropy = 16;
+  const [frontTexture, backTexture] = useTexture([front, back]);
+  
+  useLayoutEffect(() => {
+    frontTexture.anisotropy = 16;
+    backTexture.anisotropy = 16;
+    frontTexture.needsUpdate = true;
+    backTexture.needsUpdate = true;
+  }, [frontTexture, backTexture]);
   
   // Create rounded rectangle shape
   const width = 2.5;
@@ -30,6 +35,13 @@ export function Bookmark(props) {
     shape.quadraticCurveTo(x + width, y, x + width - radius, y);
     shape.lineTo(x + radius, y);
     shape.quadraticCurveTo(x, y, x, y + radius);
+
+    // Add hole
+    const holePath = new THREE.Path();
+    // Center x=0. Top is y=3.5 (since height is 7 and centered). 
+    // Position hole at y=3.2 so it's closer to the top.
+    holePath.absarc(0, 3.2, 0.1, 0, Math.PI * 2, true);
+    shape.holes.push(holePath);
 
     return shape;
   }, []);

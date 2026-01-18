@@ -35,7 +35,7 @@ function Detail() {
             rotationIntensity={0.5} // XYZ rotation intensity
             floatIntensity={0.5} // Up/down float intensity
           >
-            <Bookmark />
+            <Bookmark id={id} />
           </Float>
 
           <ContactShadows 
